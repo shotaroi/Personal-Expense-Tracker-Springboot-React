@@ -9,4 +9,10 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByCategoryIgnoreCase(String category);
 
     List<Expense> findByDateBetween(LocalDate startDate, LocalDate endDate);
+
+    List<Expense> findByCategoryIgnoreCaseAndDateBetween(
+        String category,
+        LocalDate startDate,
+        LocalDate endDate
+    );
 }

@@ -31,6 +31,11 @@ public class ExpenseController {
         @RequestParam(required = false) LocalDate startDate,
         @RequestParam(required = false) LocalDate endDate
     ) {
+
+        if (category != null && !category.isBlank() && startDate != null && endDate != null) {
+            return repository.findByCategoryIgnoreCaseAndDateBetween(category, startDate, endDate);
+        }
+
         if (category != null && !category.isBlank()) {
             return repository.findByCategoryIgnoreCase(category);
         }
