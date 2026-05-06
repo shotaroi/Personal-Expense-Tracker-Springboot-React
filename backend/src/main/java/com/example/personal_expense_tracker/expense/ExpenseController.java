@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +48,22 @@ public class ExpenseController {
 
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Expense> update(
+        @PathVariable Long id,
+        @Valid @RequestBody Expense updatedExpense
+    ) {
+        return repository.findById(id)
+            .map(expense -> {
+                expense.setTitle(updatedExpense.getTitle());
+                expense.setAmount(updatedExpense.getAmount());
+                expense.setCategory(updatedExpense.getCategory());
+                expense.setDate(updatedExpense.getDate());
+
+                return ResponseEntity.ok(repository.save(expense));
+            })
+            .orElse(ResponseEntity.notFound().build());
     }
 }
