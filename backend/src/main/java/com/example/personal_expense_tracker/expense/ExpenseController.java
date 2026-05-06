@@ -1,7 +1,9 @@
 package com.example.personal_expense_tracker.expense;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -84,5 +86,15 @@ public class ExpenseController {
                 return ResponseEntity.ok(repository.save(expense));
             })
             .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/summary")
+    public Map<String, BigDecimal> getSummary() {
+        BigDecimal total = repository.findAll()
+        .stream()
+        .map(Expense::getAmount)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return Map.of("total", total);
     }
 }
