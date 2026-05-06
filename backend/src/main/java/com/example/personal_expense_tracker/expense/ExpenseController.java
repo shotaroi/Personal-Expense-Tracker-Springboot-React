@@ -1,5 +1,6 @@
 package com.example.personal_expense_tracker.expense;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,17 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public List<Expense> findAll(@RequestParam(required = false) String category) {
+    public List<Expense> findAll(
+        @RequestParam(required = false) String category,
+        @RequestParam(required = false) LocalDate startDate,
+        @RequestParam(required = false) LocalDate endDate
+    ) {
         if (category != null && !category.isBlank()) {
             return repository.findByCategoryIgnoreCase(category);
+        }
+
+        if (startDate != null && endDate != null) {
+            return repository.findByDateBetween(startDate, endDate);
         }
 
         return repository.findAll();
