@@ -1,5 +1,7 @@
 package com.example.personal_expense_tracker.expense;
 
-public class ExpenseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     
 }
