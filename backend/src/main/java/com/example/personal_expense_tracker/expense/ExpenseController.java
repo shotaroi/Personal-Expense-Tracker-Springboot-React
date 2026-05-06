@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -24,7 +25,11 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public List<Expense> findAll() {
+    public List<Expense> findAll(@RequestParam(required = false) String category) {
+        if (category != null && !category.isBlank()) {
+            return repository.findByCategoryIgnoreCase(category);
+        }
+
         return repository.findAll();
     }
 
