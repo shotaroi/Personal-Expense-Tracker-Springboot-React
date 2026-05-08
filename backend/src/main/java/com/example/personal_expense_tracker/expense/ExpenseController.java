@@ -71,6 +71,21 @@ public class ExpenseController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/summary")
+    public Map<String, BigDecimal> getSummary(
+        @RequestParam(required = false) String category,
+        @RequestParam(required = false) LocalDate startDate,
+        @RequestParam(required = false) LocalDate endDate
+    ) {
+        List<Expense> expenses = findAll(category, startDate, endDate);
+
+        BigDecimal total = expenses.stream()
+        .map(Expense::getAmount)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return Map.of("total", total);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Expense> update(
         @PathVariable Long id,
@@ -86,15 +101,5 @@ public class ExpenseController {
                 return ResponseEntity.ok(repository.save(expense));
             })
             .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/summary")
-    public Map<String, BigDecimal> getSummary() {
-        BigDecimal total = repository.findAll()
-        .stream()
-        .map(Expense::getAmount)
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return Map.of("total", total);
     }
 }
