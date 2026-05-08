@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -84,6 +85,26 @@ public class ExpenseController {
         .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return Map.of("total", total);
+    }
+
+    @GetMapping("/summary/by-category")
+    public Map<String, BigDecimal> getSummaryByCategory(
+        @RequestParam(required = false) LocalDate startDate,
+        @RequestParam(required = false) LocalDate endDate
+    ) {
+        List<Expense> expenses = startDate != null && endDate != null 
+        ? repository.findByDateBetween(startDate, endDate)
+        : repository.findAll();
+
+        return expenses.stream()
+        .collect(Collectors.groupingBy(
+            Expense::getCategory,
+            Collectors.reducing(
+                BigDecimal.ZERO,
+                Expense::getAmount,
+                BigDecimal::add
+            )
+        ));
     }
 
     @PutMapping("/{id}")
