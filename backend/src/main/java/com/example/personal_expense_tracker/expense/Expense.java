@@ -7,8 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,9 +28,12 @@ public class Expense {
     private String title;
 
     @NotNull
+    @DecimalMin(value = "0.01")
     private BigDecimal amount;
 
     private String category;
 
+    @NotNull
+    @PastOrPresent
     private LocalDate date;
 }
