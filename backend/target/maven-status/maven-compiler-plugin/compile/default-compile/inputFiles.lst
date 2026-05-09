@@ -1,4 +1,5 @@
 /Users/shotaroishii/Documents/GitHub/Personal-Expense-Tracker-Springboot-React/backend/src/main/java/com/example/personal_expense_tracker/PersonalExpenseTrackerApplication.java
+/Users/shotaroishii/Documents/GitHub/Personal-Expense-Tracker-Springboot-React/backend/src/main/java/com/example/personal_expense_tracker/config/WebConfig.java
 /Users/shotaroishii/Documents/GitHub/Personal-Expense-Tracker-Springboot-React/backend/src/main/java/com/example/personal_expense_tracker/expense/Expense.java
 /Users/shotaroishii/Documents/GitHub/Personal-Expense-Tracker-Springboot-React/backend/src/main/java/com/example/personal_expense_tracker/expense/ExpenseController.java
 /Users/shotaroishii/Documents/GitHub/Personal-Expense-Tracker-Springboot-React/backend/src/main/java/com/example/personal_expense_tracker/expense/ExpenseRepository.java
