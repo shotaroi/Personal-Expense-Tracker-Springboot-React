@@ -253,9 +253,9 @@ function App() {
         <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
         <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
         <input name='date' value={form.date} onChange={handleChange} type='date' max={new Date().toISOString().split('T')[0]} />
-        <button type='submit' disabled={saving}>{saving ? 'Saving...' :editingId === null ? 'Add Expense' : 'Update Expense'}</button>
+        <button type='submit' disabled={saving}>{saving ? 'Saving...' : editingId === null ? 'Add Expense' : 'Update Expense'}</button>
         {editingId !== null && (
-          <button type='button' onClick={cancelEdit}>Cancel</button>
+          <button type='button' disabled={saving} onClick={cancelEdit}>Cancel</button>
         )}
       </form>
 
@@ -267,10 +267,10 @@ function App() {
           {expenses.map(expense => (
             <li key={expense.id}>
               {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
-              <button type='button' onClick={() => handleDelete(expense.id)}>
+              <button type='button' disabled={saving} onClick={() => handleDelete(expense.id)}>
                 Delete
               </button>
-              <button type='button' onClick={() => startEdit(expense)}>Edit</button>
+              <button type='button' disabled={saving} onClick={() => startEdit(expense)}>Edit</button>
             </li>
           ))}
         </ul>
