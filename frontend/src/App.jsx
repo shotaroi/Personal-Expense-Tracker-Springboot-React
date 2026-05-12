@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 const API_URL = 'http://localhost:8080/api/expenses';
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -205,7 +209,7 @@ function App() {
     <>
      <main>
       <h1>Personal Expense Tracker</h1>
-      <h2>Total: ${total}</h2>
+      <h2>Total: {currencyFormatter.format(total)}</h2>
       <h3>By Category</h3>
       {Object.keys(categoryTotals).length === 0 ? (
         <p>No category totals yet.</p>
@@ -213,7 +217,7 @@ function App() {
         <ul>
         {Object.entries(categoryTotals).map(([category, amount]) => (
           <li key={category}>
-            {category}: ${amount}
+            {category}: {currencyFormatter.format(amount)}
           </li>
         ))}
       </ul>
@@ -252,7 +256,7 @@ function App() {
           <ul>
           {expenses.map(expense => (
             <li key={expense.id}>
-              {expense.title} - ${expense.amount} - {expense.category}
+              {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category}
               <button type='button' onClick={() => handleDelete(expense.id)}>
                 Delete
               </button>
