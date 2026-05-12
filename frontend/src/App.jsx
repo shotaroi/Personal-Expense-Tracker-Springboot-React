@@ -23,6 +23,7 @@ function App() {
   const [endDateFilter, setEndDateFilter] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [categoryTotals, setCategoryTotals] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     loadExpenses();
@@ -65,6 +66,8 @@ function App() {
     ? `${API_URL}/${editingId}`
     : `${API_URL}`
 
+    setSaving(true);
+
     fetch(url, {
       method: isEditing ? 'PUT' : 'POST',
       headers: {
@@ -87,6 +90,7 @@ function App() {
       loadCategoryTotals(startDateFilter, endDateFilter);
     })
     .catch(error => setError(error.message))
+    .finally(() => setSaving(false));
   }
 
   function handleDelete(id) {
@@ -249,7 +253,7 @@ function App() {
         <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
         <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
         <input name='date' value={form.date} onChange={handleChange} type='date' max={new Date().toISOString().split('T')[0]} />
-        <button type='submit'>{editingId === null ? 'Add Expense' : 'Update Expense'}</button>
+        <button type='submit' disabled={saving}>{saving ? 'Saving...' :editingId === null ? 'Add Expense' : 'Update Expense'}</button>
         {editingId !== null && (
           <button type='button' onClick={cancelEdit}>Cancel</button>
         )}
