@@ -44,9 +44,9 @@ function App() {
       return response.json();
     })
     .then(newExpenses => {
-      setExpenses([...expenses, newExpenses]);
       setForm({ title: '', amount: '', category: '', date: ''})
-      loadSummary();
+      loadExpenses(categoryFilter, startDateFilter, endDateFilter);
+      loadSummary(categoryFilter, startDateFilter, endDateFilter);
     })
     .catch(error => setError(error.message))
   }
@@ -57,8 +57,8 @@ function App() {
     })
     .then(response => {
       if (!response.ok) throw new Error('Failed to delete expense');
-      setExpenses(expenses.filter(expense => expense.id !== id));
-      loadSummary();
+      loadExpenses(categoryFilter, startDateFilter, endDateFilter);
+      loadSummary(categoryFilter, startDateFilter, endDateFilter);
     })
     .catch(error => setError(error.message))
   }
@@ -73,7 +73,7 @@ function App() {
     }
 
     const query = params.toString();
-    const url = category 
+    const url = query 
     ? `http://localhost:8080/api/expenses/summary?${query}`
     : 'http://localhost:8080/api/expenses/summary'
 
