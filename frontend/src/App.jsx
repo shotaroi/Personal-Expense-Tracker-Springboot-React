@@ -45,7 +45,12 @@ function App() {
     }
 
     if (!form.date) {
-      setError('Date if required');
+      setError('Date is required');
+      return;
+    }
+
+    if (form.date > new Date().toISOString().split('T')[0]) {
+      setError('Date cannot be in the future');
       return;
     }
 
@@ -229,7 +234,7 @@ function App() {
         <input name='title' value={form.title} onChange={handleChange} placeholder='Title' />
         <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
         <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
-        <input name='date' value={form.date} onChange={handleChange} type='date' />
+        <input name='date' value={form.date} onChange={handleChange} type='date' max={new Date().toISOString().split('T')[0]} />
         <button type='submit'>{editingId === null ? 'Add Expense' : 'Update Expense'}</button>
         {editingId !== null && (
           <button type='button' onClick={cancelEdit}>Cancel</button>
