@@ -12,17 +12,10 @@ function App() {
     date: '',
   });
   const [total, setTotal] = useState(0);
+  const [categoryFilter, setCategoryFilter] = useState('');
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/expenses")
-    .then(response => {
-      if (!response.ok) throw new Error("Failed to load expenses");
-      return response.json();
-    })
-    .then(data => setExpenses(data))
-    .catch(error => setError(error.message))
-    .finally(() => setLoading(false));
-
+    loadExpenses();
     loadSummary();
   }, []);
 
@@ -76,7 +69,35 @@ function App() {
     })
     .then(data => setTotal(data.total))
     .catch(error => setError(error.message));
- }
+  }
+
+  function loadExpenses(category = '') {
+    const url = category ?
+     `http://localhost:8080/api/expenses?category=${encodeURIComponent(category)}`
+    : 'http://localhost:8080/api/expenses'
+
+    setLoading(true);
+
+    fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to load expenses');
+      return response.json();
+    })
+    .then(data => setExpenses(data))
+    .catch(error => setError(error.message))
+    .finally(() => setLoading(false))
+  }
+
+  function handleFilterSubmit(event) {
+    event.preventDefault();
+    loadExpenses(categoryFilter);
+  }
+
+  function clearFilter() {
+    setCategoryFilter('');
+    loadExpenses();
+  }
+  
   return (
     <>
      <main>
@@ -85,6 +106,16 @@ function App() {
 
       {loading && <p>Loading expenses...</p>}
       {error && <p>{error}</p>}
+
+      <form onSubmit={handleFilterSubmit}>
+        <input 
+          value={categoryFilter}
+          onChange={event => setCategoryFilter(event.target.value)}
+          placeholder='Filter by category'
+        />
+        <button type='submit'>Filter</button>
+        <button type='button' onClick={clearFilter}>Clear</button>
+      </form>
 
       <form onSubmit={handleSubmit}>
         <input name='title' value={form.title} onChange={handleChange} placeholder='Title' />
