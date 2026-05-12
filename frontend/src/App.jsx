@@ -34,6 +34,23 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
 
+    if (!form.title.trim()) {
+      setError('Title is required');
+      return;
+    }
+
+    if (!form.amount || Number(form.amount) <= 0) {
+      setError('Amount must be greater than 0');
+      return;
+    }
+
+    if (!form.date) {
+      setError('Date if required');
+      return;
+    }
+
+    setError('');
+
     const isEditing = editingId !== null;
     const url = isEditing
     ? `${API_URL}/${editingId}`
