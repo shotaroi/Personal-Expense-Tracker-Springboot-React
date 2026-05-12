@@ -16,10 +16,12 @@ function App() {
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
   const[editingId, setEditingId] = useState(null);
+  const [categoryTotals, setCategoryTotals] = useState({});
 
   useEffect(() => {
     loadExpenses();
     loadSummary();
+    loadCategoryTotals(startDateFilter, endDateFilter);
   }, []);
 
   function handleChange(event) {
@@ -49,7 +51,7 @@ function App() {
       if (!response.ok) throw new Error(isEditing ? 'Failed to update expense' :'Failed to create expense'); 
       return response.json();
     })
-    .then(newExpenses => {
+    .then(() => {
       setForm({ title: '', amount: '', category: '', date: ''})
       setEditingId(null);
       loadExpenses(categoryFilter, startDateFilter, endDateFilter);
@@ -123,6 +125,7 @@ function App() {
     event.preventDefault();
     loadExpenses(categoryFilter, startDateFilter, endDateFilter);
     loadSummary(categoryFilter, startDateFilter, endDateFilter);
+    loadCategoryTotals(startDateFilter, endDateFilter);
   }
 
   function clearFilter() {
@@ -131,6 +134,7 @@ function App() {
     setEndDateFilter('');
     loadExpenses();
     loadSummary();
+    loadCategoryTotals();
   }
 
   function startEdit(expense) {
@@ -147,12 +151,43 @@ function App() {
     setEditingId(null);
     setForm({ title: '', amount: '', category: '', date: ''});
   }
+
+  function loadCategoryTotals(startDate = '', endDate = '') {
+    const params = new URLSearchParams();
+
+    if (startDate && endDate) {
+      params.append('startDate', startDate);
+      params.append('endDate', endDate);
+    }
+
+    const query = params.toString();
+    const url = query 
+    ? `http://localhost:8080/api/expenses/summary/by-category?${query}` 
+    : 'http://localhost:8080/api/expenses/summary/by-category'
+
+    fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to load category totals')
+        return response.json();
+    })
+    .then(data => setCategoryTotals(data))
+    .catch(error => setError(error.message));
+
+  }
   
   return (
     <>
      <main>
       <h1>Personal Expense Tracker</h1>
       <h2>Total: ${total}</h2>
+      <h3>By Category</h3>
+      <ul>
+        {Object.entries(categoryTotals).map(([category, amount]) => (
+          <li key={category}>
+            {category}: ${amount}
+          </li>
+        ))}
+      </ul>
 
       {loading && <p>Loading expenses...</p>}
       {error && <p>{error}</p>}
