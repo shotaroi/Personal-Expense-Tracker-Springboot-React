@@ -238,6 +238,12 @@ function App() {
         <button type='button' onClick={clearFilter}>Clear</button>
       </form>
 
+      <p>
+        Showing:
+        {categoryFilter ? ` category "${categoryFilter}"` : ' all categories'}
+        {startDateFilter && endDateFilter ? ` from ${startDateFilter} to ${endDateFilter}` : ''}
+      </p>
+
       <form onSubmit={handleSubmit}>
         <input name='title' value={form.title} onChange={handleChange} placeholder='Title' />
         <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
@@ -256,7 +262,7 @@ function App() {
           <ul>
           {expenses.map(expense => (
             <li key={expense.id}>
-              {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category}
+              {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
               <button type='button' onClick={() => handleDelete(expense.id)}>
                 Delete
               </button>
