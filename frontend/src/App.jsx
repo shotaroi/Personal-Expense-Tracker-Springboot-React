@@ -15,9 +15,7 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:8080/api/expenses")
     .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to load expenses");
-      }
+      if (!response.ok) throw new Error("Failed to load expenses");
       return response.json();
     })
     .then(data => setExpenses(data))
@@ -44,14 +42,23 @@ function App() {
       }),
     })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error('Failed to create expense');
-      }
+      if (!response.ok) throw new Error('Failed to create expense'); 
       return response.json();
     })
     .then(newExpenses => {
       setExpenses([...expenses, newExpenses]);
       setForm({ title: '', amount: '', category: '', date: ''})
+    })
+    .catch(error => setError(error.message))
+  }
+
+  function handleDelete(id) {
+    fetch(`http://localhost:8080/api/expenses/${id}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to delete expense');
+      setExpenses(expenses.filter(expense => expense.id !== id))
     })
     .catch(error => setError(error.message))
   }
@@ -77,6 +84,9 @@ function App() {
         {expenses.map(expense => (
           <li key={expense.id}>
             {expense.title} - ${expense.amount} - {expense.category}
+            <button type='button' onClick={() => handleDelete(expense.id)}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
