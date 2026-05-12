@@ -51,6 +51,7 @@ function App() {
     })
     .then(newExpenses => {
       setForm({ title: '', amount: '', category: '', date: ''})
+      setEditingId(null);
       loadExpenses(categoryFilter, startDateFilter, endDateFilter);
       loadSummary(categoryFilter, startDateFilter, endDateFilter);
     })
@@ -141,6 +142,11 @@ function App() {
       date: expense.date,
     });
   }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setForm({ title: '', amount: '', category: '', date: ''});
+  }
   
   return (
     <>
@@ -169,6 +175,9 @@ function App() {
         <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
         <input name='date' value={form.date} onChange={handleChange} type='date' />
         <button type='submit'>{editingId === null ? 'Add Expense' : 'Update Expense'}</button>
+        {editingId !== null && (
+          <button type='button' onClick={cancelEdit}>Cancel</button>
+        )}
       </form>
 
       {!loading && !error && (
