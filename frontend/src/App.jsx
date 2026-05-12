@@ -15,6 +15,7 @@ function App() {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
+  const[editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     loadExpenses();
@@ -29,8 +30,13 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    fetch('http://localhost:8080/api/expenses', {
-      method: 'POST',
+    const isEditing = editingId !== null;
+    const url = isEditing
+    ? `http://localhost:8080/api/expenses/${editingId}`
+    : 'http://localhost:8080/api/expenses'
+
+    fetch(url, {
+      method: isEditing ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -40,7 +46,7 @@ function App() {
       }),
     })
     .then((response) => {
-      if (!response.ok) throw new Error('Failed to create expense'); 
+      if (!response.ok) throw new Error(isEditing ? 'Failed to update expense' :'Failed to create expense'); 
       return response.json();
     })
     .then(newExpenses => {
@@ -125,6 +131,16 @@ function App() {
     loadExpenses();
     loadSummary();
   }
+
+  function startEdit(expense) {
+    setEditingId(expense.id);
+    setForm({
+      title: expense.title,
+      amount: expense.amount,
+      category: expense.category,
+      date: expense.date,
+    });
+  }
   
   return (
     <>
@@ -152,7 +168,7 @@ function App() {
         <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
         <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
         <input name='date' value={form.date} onChange={handleChange} type='date' />
-        <button type='submit'>Add Expense</button>
+        <button type='submit'>{editingId === null ? 'Add Expense' : 'Update Expense'}</button>
       </form>
 
       {!loading && !error && (
@@ -163,6 +179,7 @@ function App() {
             <button type='button' onClick={() => handleDelete(expense.id)}>
               Delete
             </button>
+            <button type='button' onClick={() => startEdit(expense)}>Edit</button>
           </li>
         ))}
       </ul>
