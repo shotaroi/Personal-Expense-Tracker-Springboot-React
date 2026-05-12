@@ -56,6 +56,7 @@ function App() {
       setEditingId(null);
       loadExpenses(categoryFilter, startDateFilter, endDateFilter);
       loadSummary(categoryFilter, startDateFilter, endDateFilter);
+      loadCategoryTotals(startDateFilter, endDateFilter);
     })
     .catch(error => setError(error.message))
   }
@@ -68,6 +69,7 @@ function App() {
       if (!response.ok) throw new Error('Failed to delete expense');
       loadExpenses(categoryFilter, startDateFilter, endDateFilter);
       loadSummary(categoryFilter, startDateFilter, endDateFilter);
+      loadCategoryTotals(startDateFilter, endDateFilter);
     })
     .catch(error => setError(error.message))
   }
@@ -168,7 +170,7 @@ function App() {
     fetch(url)
     .then(response => {
       if (!response.ok) throw new Error('Failed to load category totals')
-        return response.json();
+      return response.json();
     })
     .then(data => setCategoryTotals(data))
     .catch(error => setError(error.message));
