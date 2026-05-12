@@ -13,6 +13,8 @@ function App() {
   });
   const [total, setTotal] = useState(0);
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [startDateFilter, setStartDateFilter] = useState('');
+  const [endDateFilter, setEndDateFilter] = useState('');
 
   useEffect(() => {
     loadExpenses();
@@ -61,9 +63,18 @@ function App() {
     .catch(error => setError(error.message))
   }
 
-  function loadSummary(category = '') {
-    const url = catetory 
-    ? `http://localhost:8080/api/expenses/summary?category=${encodeURIComponent(category)}`
+  function loadSummary(category = '', startDate = '', endDate = '') {
+    const params = new URLSearchParams();
+
+    if (category) params.append('category', category);
+    if (startDate && endDate) {
+      params.append('startDate', startDate);
+      params.append('endDate', endDate);
+    }
+
+    const query = params.toString();
+    const url = category 
+    ? `http://localhost:8080/api/expenses/summary?${query}`
     : 'http://localhost:8080/api/expenses/summary'
 
     fetch(url)
@@ -75,9 +86,18 @@ function App() {
     .catch(error => setError(error.message));
   }
 
-  function loadExpenses(category = '') {
-    const url = category ?
-     `http://localhost:8080/api/expenses?category=${encodeURIComponent(category)}`
+  function loadExpenses(category = '', startDate = '', endDate = '') {
+    const params = new URLSearchParams();
+
+    if (category) params.append('category', category);
+    if (startDate && endDate) {
+      params.append('startDate', startDate);
+      params.append('endDate', endDate)
+    }
+
+    const query = params.toString();
+    const url = query ?
+     `http://localhost:8080/api/expenses?${query}`
     : 'http://localhost:8080/api/expenses'
 
     setLoading(true);
@@ -94,12 +114,14 @@ function App() {
 
   function handleFilterSubmit(event) {
     event.preventDefault();
-    loadExpenses(categoryFilter);
-    loadSummary(categoryFilter);
+    loadExpenses(categoryFilter, startDateFilter, endDateFilter);
+    loadSummary(categoryFilter, startDateFilter, endDateFilter);
   }
 
   function clearFilter() {
     setCategoryFilter('');
+    setStartDateFilter('');
+    setEndDateFilter('');
     loadExpenses();
     loadSummary();
   }
@@ -119,6 +141,8 @@ function App() {
           onChange={event => setCategoryFilter(event.target.value)}
           placeholder='Filter by category'
         />
+        <input type="date" value={startDateFilter} onChange={event => setStartDateFilter(event.target.value)} />
+        <input type="date" value={endDateFilter} onChange={event => setEndDateFilter(event.target.value)} />
         <button type='submit'>Filter</button>
         <button type='button' onClick={clearFilter}>Clear</button>
       </form>
