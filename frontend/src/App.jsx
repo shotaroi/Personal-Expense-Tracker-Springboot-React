@@ -207,14 +207,18 @@ function App() {
       <h1>Personal Expense Tracker</h1>
       <h2>Total: ${total}</h2>
       <h3>By Category</h3>
-      <ul>
+      {Object.keys(categoryTotals).length === 0 ? (
+        <p>No category totals yet.</p>
+      ) : (
+        <ul>
         {Object.entries(categoryTotals).map(([category, amount]) => (
           <li key={category}>
             {category}: ${amount}
           </li>
         ))}
       </ul>
-
+      )}
+      
       {loading && <p>Loading expenses...</p>}
       {error && <p>{error}</p>}
 
@@ -242,17 +246,21 @@ function App() {
       </form>
 
       {!loading && !error && (
-        <ul>
-        {expenses.map(expense => (
-          <li key={expense.id}>
-            {expense.title} - ${expense.amount} - {expense.category}
-            <button type='button' onClick={() => handleDelete(expense.id)}>
-              Delete
-            </button>
-            <button type='button' onClick={() => startEdit(expense)}>Edit</button>
-          </li>
-        ))}
-      </ul>
+        expenses.length === 0 ? (
+          <p>No expenses yet.</p>
+        ) : (
+          <ul>
+          {expenses.map(expense => (
+            <li key={expense.id}>
+              {expense.title} - ${expense.amount} - {expense.category}
+              <button type='button' onClick={() => handleDelete(expense.id)}>
+                Delete
+              </button>
+              <button type='button' onClick={() => startEdit(expense)}>Edit</button>
+            </li>
+          ))}
+        </ul>
+        )
       )}
      </main>
     </>
