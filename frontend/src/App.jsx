@@ -94,6 +94,10 @@ function App() {
   }
 
   function handleDelete(id) {
+    const confirmed = window.confirm('Delete this expense?');
+
+    if (!confirmed) return;
+
     fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
     })
