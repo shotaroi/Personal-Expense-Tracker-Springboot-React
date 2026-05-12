@@ -10,7 +10,8 @@ function App() {
     amount: '',
     category: '',
     date: '',
-  })
+  });
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/expenses")
@@ -21,6 +22,8 @@ function App() {
     .then(data => setExpenses(data))
     .catch(error => setError(error.message))
     .finally(() => setLoading(false));
+
+    loadSummary();
   }, []);
 
   function handleChange(event) {
@@ -63,10 +66,20 @@ function App() {
     .catch(error => setError(error.message))
   }
 
+  function loadSummary() {
+    fetch('http://localhost:8080/api/expenses/summary')
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to load summary');
+      return response.json();
+    })
+    .then(data => setTotal(data.total))
+    .catch(error => setError(error.message));
+ }
   return (
     <>
      <main>
       <h1>Personal Expense Tracker</h1>
+      <h2>Total: ${total}</h2>
 
       {loading && <p>Loading expenses...</p>}
       {error && <p>{error}</p>}
