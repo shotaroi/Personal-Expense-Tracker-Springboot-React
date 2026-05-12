@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+const API_URL = 'http://localhost:8080/api/expenses';
+
 function App() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const[error, setError] = useState('');
+  const [error, setError] = useState('');
   const [form, setForm] = useState({
     title: '',
     amount: '',
@@ -15,7 +17,7 @@ function App() {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
-  const[editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState(null);
   const [categoryTotals, setCategoryTotals] = useState({});
 
   useEffect(() => {
@@ -34,8 +36,8 @@ function App() {
 
     const isEditing = editingId !== null;
     const url = isEditing
-    ? `http://localhost:8080/api/expenses/${editingId}`
-    : 'http://localhost:8080/api/expenses'
+    ? `${API_URL}/${editingId}`
+    : `${API_URL}`
 
     fetch(url, {
       method: isEditing ? 'PUT' : 'POST',
@@ -62,7 +64,7 @@ function App() {
   }
 
   function handleDelete(id) {
-    fetch(`http://localhost:8080/api/expenses/${id}`, {
+    fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
     })
     .then(response => {
@@ -85,8 +87,8 @@ function App() {
 
     const query = params.toString();
     const url = query 
-    ? `http://localhost:8080/api/expenses/summary?${query}`
-    : 'http://localhost:8080/api/expenses/summary'
+    ? `${API_URL}/summary?${query}`
+    : `${API_URL}/summary`
 
     fetch(url)
     .then(response => {
@@ -108,8 +110,8 @@ function App() {
 
     const query = params.toString();
     const url = query ?
-     `http://localhost:8080/api/expenses?${query}`
-    : 'http://localhost:8080/api/expenses'
+     `${API_URL}?${query}`
+    : `${API_URL}`
 
     setLoading(true);
 
@@ -164,8 +166,8 @@ function App() {
 
     const query = params.toString();
     const url = query 
-    ? `http://localhost:8080/api/expenses/summary/by-category?${query}` 
-    : 'http://localhost:8080/api/expenses/summary/by-category'
+    ? `${API_URL}/summary/by-category?${query}` 
+    : `${API_URL}/summary/by-category`
 
     fetch(url)
     .then(response => {
