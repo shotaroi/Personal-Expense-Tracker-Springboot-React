@@ -82,9 +82,7 @@ function App() {
     .then(() => {
       setForm({ title: '', amount: '', category: '', date: ''})
       setEditingId(null);
-      loadExpenses(categoryFilter, startDateFilter, endDateFilter);
-      loadSummary(categoryFilter, startDateFilter, endDateFilter);
-      loadCategoryTotals(startDateFilter, endDateFilter);
+      refreshData();
     })
     .catch(error => setError(error.message))
     .finally(() => setSaving(false));
@@ -97,9 +95,7 @@ function App() {
 
     deleteExpense(id)
     .then(() => {
-      loadExpenses(categoryFilter, startDateFilter, endDateFilter);
-      loadSummary(categoryFilter, startDateFilter, endDateFilter);
-      loadCategoryTotals(startDateFilter, endDateFilter);
+     refreshData();
     })
     .catch(error => setError(error.message))
   }
@@ -121,14 +117,14 @@ function App() {
 
   function handleFilterSubmit(event) {
     event.preventDefault();
-    refereshData(categoryFilter, startDateFilter, endDateFilter);
+    refreshData();
   }
 
   function clearFilter() {
     setCategoryFilter('');
     setStartDateFilter('');
     setEndDateFilter('');
-    refereshData('', '', '');
+    refreshData('', '', '');
   }
 
   function startEdit(expense) {
@@ -152,10 +148,10 @@ function App() {
     .catch(error => setError(error.message));
   }
 
-  function refereshData(category = categoryFilter, startDate = startDateFilter, endDate = endDateFilter) {
-    loadExpenses(categoryFilter, startDateFilter, endDateFilter);
-    loadSummary(categoryFilter, startDateFilter, endDateFilter);
-    loadCategoryTotals(startDateFilter, endDateFilter);
+  function refreshData(category = categoryFilter, startDate = startDateFilter, endDate = endDateFilter) {
+    loadExpenses(category, startDate, endDate);
+    loadSummary(category, startDate, endDate);
+    loadCategoryTotals(startDate, endDate);
   }
   
   return (
