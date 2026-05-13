@@ -12,6 +12,7 @@ import {
   updateExpense, 
   deleteExpense, 
 } from './services/expenseApi';
+import { validateExpense } from './utils/validateExpense';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -44,19 +45,11 @@ function App() {
     const { name, value } = event.target
     setForm({ ...form, [name]: value })
   }
-
-  function validateForm() {
-    if (!form.title.trim()) return 'Title is required';
-    if (!form.amount || Number(form.amount) <= 0) return 'Amount must be greater than 0';
-    if (!form.date) return 'Date is required';
-    if (form.date > new Date().toISOString().split('T')[0]) return 'Date cannot be in the future';
-    return '';
-  }
   
   function handleSubmit(event) {
     event.preventDefault();
 
-    const validationError = validateForm();
+    const validationError = validateExpense(form);
 
     if (validationError) {
       setError(validationError);
