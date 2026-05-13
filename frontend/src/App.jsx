@@ -3,6 +3,7 @@ import './App.css'
 import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
 import ExpenseForm from './components/ExpenseForm';
+import ExpenseList from './components/ExpenseList';
 
 const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -250,28 +251,13 @@ function App() {
       />
 
       {!loading && !error && (
-        expenses.length === 0 ? (
-          <p>No expenses yet.</p>
-        ) : (
-          <ul className='expense-list'>
-          {expenses.map(expense => (
-            <li key={expense.id}>
-              <span>
-                {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
-              </span>
-
-              <span className='expense-actions'>
-                <button type='button' disabled={saving} onClick={() => handleDelete(expense.id)}>
-                  Delete
-                </button>
-                <button type='button' disabled={saving} onClick={() => startEdit(expense)}>
-                  Edit
-                </button>
-              </span>  
-            </li>
-          ))}
-        </ul>
-        )
+        <ExpenseList 
+          expenses={expenses}
+          currencyFormatter={currencyFormatter}
+          saving={saving}
+          handleDelete={handleDelete}
+          startEdit={startEdit}
+        />
       )}
      </main>
     </>
