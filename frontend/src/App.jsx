@@ -219,7 +219,7 @@ function App() {
       <h1>Personal Expense Tracker</h1>
       <section className='summary'>
         <div className="summary-card">
-          <h2>Total: {currencyFormatter.format(total)}</h2>
+          <h2>Total</h2>
           <p>{currencyFormatter.format(total)}</p>
         </div>
 
