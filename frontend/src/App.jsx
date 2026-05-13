@@ -30,9 +30,7 @@ function App() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    loadExpenses();
-    loadSummary();
-    loadCategoryTotals(startDateFilter, endDateFilter);
+    refreshData('', '', '');
   }, []);
 
   function handleChange(event) {
@@ -117,7 +115,7 @@ function App() {
 
   function handleFilterSubmit(event) {
     event.preventDefault();
-    refreshData();
+    refreshData(categoryFilter, startDateFilter, endDatefilter);
   }
 
   function clearFilter() {
