@@ -234,7 +234,7 @@ function App() {
       </section>
 
       {loading && <p>Loading expenses...</p>}
-      {error && <p>{error}</p>}
+      {error && <p className='error'>{error}</p>}
 
       <form className='filter-form' onSubmit={handleFilterSubmit}>
         <input 
