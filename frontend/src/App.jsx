@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
+import ExpenseForm from './components/ExpenseForm';
 
 const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -239,16 +240,14 @@ function App() {
         clearFilter={clearFilter}
       />
 
-      <form className='expense-form' onSubmit={handleSubmit}>
-        <input name='title' value={form.title} onChange={handleChange} placeholder='Title' />
-        <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
-        <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
-        <input name='date' value={form.date} onChange={handleChange} type='date' max={new Date().toISOString().split('T')[0]} />
-        <button type='submit' disabled={saving}>{saving ? 'Saving...' : editingId === null ? 'Add Expense' : 'Update Expense'}</button>
-        {editingId !== null && (
-          <button type='button' disabled={saving} onClick={cancelEdit}>Cancel</button>
-        )}
-      </form>
+      <ExpenseForm 
+        form={form}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        editingId={editingId}
+        saving={saving}
+        cancelEdit={cancelEdit}
+      />
 
       {!loading && !error && (
         expenses.length === 0 ? (
