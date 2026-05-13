@@ -215,26 +215,28 @@ function App() {
   
   return (
     <>
-     <main>
+     <main className='app'>
       <h1>Personal Expense Tracker</h1>
-      <h2>Total: {currencyFormatter.format(total)}</h2>
-      <h3>By Category</h3>
-      {Object.keys(categoryTotals).length === 0 ? (
-        <p>No category totals yet.</p>
-      ) : (
-        <ul>
-        {Object.entries(categoryTotals).map(([category, amount]) => (
-          <li key={category}>
-            {category}: {currencyFormatter.format(amount)}
-          </li>
-        ))}
-      </ul>
-      )}
-      
+      <section className='summary'>
+        <h2>Total: {currencyFormatter.format(total)}</h2>
+        <h3>By Category</h3>
+        {Object.keys(categoryTotals).length === 0 ? (
+          <p>No category totals yet.</p>
+        ) : (
+          <ul>
+          {Object.entries(categoryTotals).map(([category, amount]) => (
+            <li key={category}>
+              {category}: {currencyFormatter.format(amount)}
+            </li>
+          ))}
+        </ul>
+        )}
+      </section>
+
       {loading && <p>Loading expenses...</p>}
       {error && <p>{error}</p>}
 
-      <form onSubmit={handleFilterSubmit}>
+      <form className='filter-form' onSubmit={handleFilterSubmit}>
         <input 
           value={categoryFilter}
           onChange={event => setCategoryFilter(event.target.value)}
@@ -252,7 +254,7 @@ function App() {
         {startDateFilter && endDateFilter ? ` from ${startDateFilter} to ${endDateFilter}` : ''}
       </p>
 
-      <form onSubmit={handleSubmit}>
+      <form className='expense-form' onSubmit={handleSubmit}>
         <input name='title' value={form.title} onChange={handleChange} placeholder='Title' />
         <input name='amount' value={form.amount} onChange={handleChange} placeholder='Amount' type='number' step='0.01' />
         <input name='category' value={form.category} onChange={handleChange} placeholder='Category' />
@@ -267,7 +269,7 @@ function App() {
         expenses.length === 0 ? (
           <p>No expenses yet.</p>
         ) : (
-          <ul>
+          <ul className='expense-list'>
           {expenses.map(expense => (
             <li key={expense.id}>
               {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
