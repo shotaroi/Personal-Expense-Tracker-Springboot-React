@@ -45,26 +45,21 @@ function App() {
     setForm({ ...form, [name]: value })
   }
 
+  function validateForm() {
+    if (!form.title.trim()) return 'Title is required';
+    if (!form.amount || Number(form.amount) <= 0) return 'Amount must be greater than 0';
+    if (!form.date) return 'Date is required';
+    if (form.date > new Date().toISOString().split('T')[0]) return 'Date cannot be in the future';
+    return '';
+  }
+  
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!form.title.trim()) {
-      setError('Title is required');
-      return;
-    }
+    const validationError = validateForm();
 
-    if (!form.amount || Number(form.amount) <= 0) {
-      setError('Amount must be greater than 0');
-      return;
-    }
-
-    if (!form.date) {
-      setError('Date is required');
-      return;
-    }
-
-    if (form.date > new Date().toISOString().split('T')[0]) {
-      setError('Date cannot be in the future');
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
