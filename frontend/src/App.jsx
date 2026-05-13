@@ -4,6 +4,7 @@ import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
+import { fetchExpenses, fetchSummary, fetchCategoryTotals } from './services/expenseApi';
 
 const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -115,49 +116,15 @@ function App() {
   }
 
   function loadSummary(category = '', startDate = '', endDate = '') {
-    const params = new URLSearchParams();
-
-    if (category) params.append('category', category);
-    if (startDate && endDate) {
-      params.append('startDate', startDate);
-      params.append('endDate', endDate);
-    }
-
-    const query = params.toString();
-    const url = query 
-    ? `${API_URL}/summary?${query}`
-    : `${API_URL}/summary`
-
-    fetch(url)
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to load summary');
-      return response.json();
-    })
+    fetchSummary({ category, startDate, endDate })
     .then(data => setTotal(data.total))
     .catch(error => setError(error.message));
   }
 
   function loadExpenses(category = '', startDate = '', endDate = '') {
-    const params = new URLSearchParams();
-
-    if (category) params.append('category', category);
-    if (startDate && endDate) {
-      params.append('startDate', startDate);
-      params.append('endDate', endDate)
-    }
-
-    const query = params.toString();
-    const url = query ?
-     `${API_URL}?${query}`
-    : `${API_URL}`
-
     setLoading(true);
 
-    fetch(url)
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to load expenses');
-      return response.json();
-    })
+    fetchExpenses({ category, startDate, endDate })
     .then(data => setExpenses(data))
     .catch(error => setError(error.message))
     .finally(() => setLoading(false))
@@ -195,23 +162,7 @@ function App() {
   }
 
   function loadCategoryTotals(startDate = '', endDate = '') {
-    const params = new URLSearchParams();
-
-    if (startDate && endDate) {
-      params.append('startDate', startDate);
-      params.append('endDate', endDate);
-    }
-
-    const query = params.toString();
-    const url = query 
-    ? `${API_URL}/summary/by-category?${query}` 
-    : `${API_URL}/summary/by-category`
-
-    fetch(url)
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to load category totals')
-      return response.json();
-    })
+    fetchCategoryTotals({ startDate, endDate })
     .then(data => setCategoryTotals(data))
     .catch(error => setError(error.message));
 
