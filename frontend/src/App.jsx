@@ -66,9 +66,6 @@ function App() {
     setError('');
 
     const isEditing = editingId !== null;
-    const url = isEditing
-    ? `${API_URL}/${editingId}`
-    : `${API_URL}`
 
     setSaving(true);
 
@@ -82,10 +79,6 @@ function App() {
     : createExpense(expensePayload);
 
     request
-    .then((response) => {
-      if (!response.ok) throw new Error(isEditing ? 'Failed to update expense' :'Failed to create expense'); 
-      return response.json();
-    })
     .then(() => {
       setForm({ title: '', amount: '', category: '', date: ''})
       setEditingId(null);
@@ -102,11 +95,8 @@ function App() {
 
     if (!confirmed) return;
 
-    fetch(`${API_URL}/${id}`, {
-      method: 'DELETE',
-    })
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to delete expense');
+    deleteExpense(id)
+    .then(() => {
       loadExpenses(categoryFilter, startDateFilter, endDateFilter);
       loadSummary(categoryFilter, startDateFilter, endDateFilter);
       loadCategoryTotals(startDateFilter, endDateFilter);

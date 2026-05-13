@@ -50,7 +50,7 @@ export function createExpense(expense) {
 export function updateExpense(id, expense) {
     return fetch(`${API_URL}/${id}`, {
         method: 'PUT',
-        header: {
+        headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(expense),
