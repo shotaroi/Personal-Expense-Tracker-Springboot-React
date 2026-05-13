@@ -121,18 +121,14 @@ function App() {
 
   function handleFilterSubmit(event) {
     event.preventDefault();
-    loadExpenses(categoryFilter, startDateFilter, endDateFilter);
-    loadSummary(categoryFilter, startDateFilter, endDateFilter);
-    loadCategoryTotals(startDateFilter, endDateFilter);
+    refereshData(categoryFilter, startDateFilter, endDateFilter);
   }
 
   function clearFilter() {
     setCategoryFilter('');
     setStartDateFilter('');
     setEndDateFilter('');
-    loadExpenses();
-    loadSummary();
-    loadCategoryTotals();
+    refereshData('', '', '');
   }
 
   function startEdit(expense) {
@@ -154,7 +150,12 @@ function App() {
     fetchCategoryTotals({ startDate, endDate })
     .then(data => setCategoryTotals(data))
     .catch(error => setError(error.message));
+  }
 
+  function refereshData(category = categoryFilter, startDate = startDateFilter, endDate = endDateFilter) {
+    loadExpenses(categoryFilter, startDateFilter, endDateFilter);
+    loadSummary(categoryFilter, startDateFilter, endDateFilter);
+    loadCategoryTotals(startDateFilter, endDateFilter);
   }
   
   return (
