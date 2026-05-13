@@ -19,12 +19,7 @@ function App() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({
-    title: '',
-    amount: '',
-    category: '',
-    date: '',
-  });
+  const [form, setForm] = useState(EMPTY_FORM);
   const [total, setTotal] = useState(0);
   const [categoryFilter, setCategoryFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
@@ -32,6 +27,12 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [categoryTotals, setCategoryTotals] = useState({});
   const [saving, setSaving] = useState(false);
+  const EMPTY_FORM = {
+    title: '',
+    amount: '',
+    category: '',
+    date: '',
+  };
 
   useEffect(() => {
     refreshData('', '', '');
@@ -69,7 +70,7 @@ function App() {
 
     request
     .then(() => {
-      setForm({ title: '', amount: '', category: '', date: ''})
+      setForm(EMPTY_FORM)
       setEditingId(null);
       refreshData();
     })
@@ -128,7 +129,7 @@ function App() {
 
   function cancelEdit() {
     setEditingId(null);
-    setForm({ title: '', amount: '', category: '', date: ''});
+    setForm(EMPTY_FORM);
   }
 
   function loadCategoryTotals(startDate = '', endDate = '') {
