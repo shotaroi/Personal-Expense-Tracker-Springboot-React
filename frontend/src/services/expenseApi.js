@@ -34,3 +34,37 @@ export function fetchCategoryTotals({ startDate = '', endDate = '' } = {}) {
     })
 }
 
+export function createExpense(expense) {
+    return fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(expense),
+    }).then(response => {
+        if (!response.ok) throw new Error('Failed to create expense');
+        return response.json();
+    })
+}
+
+export function updateExpense(id, expense) {
+    return fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        header: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(expense),
+    }).then(response => {
+        if (!response.ok) throw new Error('Failed to update expense');
+        return response.json();
+    })
+}
+
+export function deleteExpense(id) {
+    return fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+    }).then(response => {
+        if (!response.ok) throw new Error('Failed to delete expense');
+    })
+}
+

@@ -4,9 +4,8 @@ import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
-import { fetchExpenses, fetchSummary, fetchCategoryTotals } from './services/expenseApi';
+import { fetchExpenses, fetchSummary, fetchCategoryTotals, createExpense, updateExpense, deleteExpense, } from './services/expenseApi';
 
-const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -73,16 +72,16 @@ function App() {
 
     setSaving(true);
 
-    fetch(url, {
-      method: isEditing ? 'PUT' : 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...form,
-        amount: Number(form.amount),
-      }),
-    })
+    const expensePayload = {
+      ...form,
+      amount: Number(form.amount),
+    }
+
+    const request = isEditing
+    ? updateExpense(editingId, expensePayload)
+    : createExpense(expensePayload);
+
+    request
     .then((response) => {
       if (!response.ok) throw new Error(isEditing ? 'Failed to update expense' :'Failed to create expense'); 
       return response.json();
