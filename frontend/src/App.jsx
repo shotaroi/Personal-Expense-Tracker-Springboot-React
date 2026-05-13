@@ -4,7 +4,14 @@ import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
-import { fetchExpenses, fetchSummary, fetchCategoryTotals, createExpense, updateExpense, deleteExpense, } from './services/expenseApi';
+import { 
+  fetchExpenses, 
+  fetchSummary,
+  fetchCategoryTotals, 
+  createExpense, 
+  updateExpense, 
+  deleteExpense, 
+} from './services/expenseApi';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -115,7 +122,7 @@ function App() {
 
   function handleFilterSubmit(event) {
     event.preventDefault();
-    refreshData(categoryFilter, startDateFilter, endDatefilter);
+    refreshData(categoryFilter, startDateFilter, endDateFilter);
   }
 
   function clearFilter() {
