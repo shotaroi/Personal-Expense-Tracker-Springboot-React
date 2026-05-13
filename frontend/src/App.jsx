@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Summary from './components/Summary';
+import Expensefilters from './components/ExpenseFilters';
 
 const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -227,23 +228,16 @@ function App() {
       {loading && <p>Loading expenses...</p>}
       {error && <p className='error'>{error}</p>}
 
-      <form className='filter-form' onSubmit={handleFilterSubmit}>
-        <input 
-          value={categoryFilter}
-          onChange={event => setCategoryFilter(event.target.value)}
-          placeholder='Filter by category'
-        />
-        <input type="date" value={startDateFilter} onChange={event => setStartDateFilter(event.target.value)} />
-        <input type="date" value={endDateFilter} onChange={event => setEndDateFilter(event.target.value)} />
-        <button type='submit'>Filter</button>
-        <button type='button' onClick={clearFilter}>Clear</button>
-      </form>
-
-      <p>
-        Showing:
-        {categoryFilter ? ` category "${categoryFilter}"` : ' all categories'}
-        {startDateFilter && endDateFilter ? ` from ${startDateFilter} to ${endDateFilter}` : ''}
-      </p>
+      <ExpenseFilters 
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+        startDateFilter={startDateFilter}
+        setStartDateFilter={setStartDateFilter}
+        endDateFilter={endDateFilter}
+        setEndDateFilter={setEndDateFilter}
+        handleFilterSubmit={handleFilterSubmit}
+        clearFilter={clearFilter}
+      />
 
       <form className='expense-form' onSubmit={handleSubmit}>
         <input name='title' value={form.title} onChange={handleChange} placeholder='Title' />
