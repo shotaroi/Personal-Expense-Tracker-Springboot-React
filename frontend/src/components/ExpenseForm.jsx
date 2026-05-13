@@ -7,7 +7,7 @@ function ExpenseForm({
     cancelEdit,
 }) {
     return (
-        <form className="expense-form" onChange={handleSubmit}>
+        <form className="expense-form" onSubmit={handleSubmit}>
             <input name="title" value={form.title} onChange={handleChange} placeholder="Title" />
             <input name="amount" value={form.amount} onChange={handleChange} placeholder="Amount" type="number" step='0.01' />
             <input name="category" value={form.category} onChange={handleChange} placeholder="category"/>
