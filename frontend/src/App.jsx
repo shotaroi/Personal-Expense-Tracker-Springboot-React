@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import Summary from './components/Summary';
 
 const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -217,27 +218,11 @@ function App() {
     <>
      <main className='app'>
       <h1>Personal Expense Tracker</h1>
-      <section className='summary'>
-        <div className="summary-card">
-          <h2>Total</h2>
-          <p>{currencyFormatter.format(total)}</p>
-        </div>
-
-        <div className="summary-card">
-          <h3>By Category</h3>
-          {Object.keys(categoryTotals).length === 0 ? (
-            <p>No category totals yet.</p>
-          ) : (
-            <ul>
-            {Object.entries(categoryTotals).map(([category, amount]) => (
-              <li key={category}>
-                {category}: {currencyFormatter.format(amount)}
-              </li>
-            ))}
-          </ul>
-          )}
-        </div>
-      </section>
+      <Summary 
+        total={total}
+        categoryTotals={categoryTotals}
+        currencyFormatter={currencyFormatter}
+      />
 
       {loading && <p>Loading expenses...</p>}
       {error && <p className='error'>{error}</p>}
