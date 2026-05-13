@@ -50,3 +50,20 @@ button {
   padding: 8px 10px;
   border-radius: 4px;
 }
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.summary-card {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.summary-card p {
+  font-size: 24px;
+  font-weight: bold;
+}
