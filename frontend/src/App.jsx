@@ -282,7 +282,7 @@ function App() {
                 {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
               </span>
 
-              <span>
+              <span className='expense-actions'>
                 <button type='button' disabled={saving} onClick={() => handleDelete(expense.id)}>
                   Delete
                 </button>
