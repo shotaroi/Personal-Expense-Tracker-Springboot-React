@@ -31,4 +31,4 @@ function ExpenseFilters({
     )
 }
 
-export default Expensefilters;
+export default ExpenseFilters;

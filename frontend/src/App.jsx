@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Summary from './components/Summary';
-import Expensefilters from './components/ExpenseFilters';
+import ExpenseFilters from './components/ExpenseFilters';
 
 const API_URL = 'http://localhost:8080/api/expenses';
 const currencyFormatter = new Intl.NumberFormat('en-US', {
