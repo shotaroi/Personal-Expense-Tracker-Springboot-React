@@ -272,11 +272,18 @@ function App() {
           <ul className='expense-list'>
           {expenses.map(expense => (
             <li key={expense.id}>
-              {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
-              <button type='button' disabled={saving} onClick={() => handleDelete(expense.id)}>
-                Delete
-              </button>
-              <button type='button' disabled={saving} onClick={() => startEdit(expense)}>Edit</button>
+              <span>
+                {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
+              </span>
+
+              <span>
+                <button type='button' disabled={saving} onClick={() => handleDelete(expense.id)}>
+                  Delete
+                </button>
+                <button type='button' disabled={saving} onClick={() => startEdit(expense)}>
+                  Edit
+                </button>
+              </span>  
             </li>
           ))}
         </ul>

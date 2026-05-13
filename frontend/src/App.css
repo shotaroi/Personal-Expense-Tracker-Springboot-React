@@ -23,11 +23,19 @@ button {
 }
 
 .expense-list {
-  padding-left: 20px;
+  list-style: none;
+  padding: 0;
 }
 
 .expense-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
   margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }
 
 button {
