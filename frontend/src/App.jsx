@@ -13,11 +13,7 @@ import {
   deleteExpense, 
 } from './services/expenseApi';
 import { validateExpense } from './utils/validateExpense';
-
-const currencyFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+import { currencyFormatter } from './utils/currencyFormatter';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
