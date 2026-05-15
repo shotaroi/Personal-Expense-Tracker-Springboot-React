@@ -59,6 +59,7 @@ function App() {
     const validationError = validateExpense(form);
 
     if (validationError) {
+      setMessage('');
       setError(validationError);
       return;
     }
@@ -173,7 +174,7 @@ function App() {
       />
 
       {loading && <p>Loading expenses...</p>}
-      <Notification error={error} message={message} />
+      <Notifications error={error} message={message} />
       <ExpenseFilters 
         categoryFilter={categoryFilter}
         setCategoryFilter={setCategoryFilter}
