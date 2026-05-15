@@ -14,13 +14,7 @@ import {
 } from './services/expenseApi';
 import { validateExpense } from './utils/validateExpense';
 import { currencyFormatter } from './utils/currencyFormatter';
-
-const EMPTY_FORM = {
-  title: '',
-  amount: '',
-  category: '',
-  date: '',
-};
+import { EMPTY_FORM } from './constants/expenseForm';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
