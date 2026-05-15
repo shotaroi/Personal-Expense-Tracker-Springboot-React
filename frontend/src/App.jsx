@@ -33,6 +33,7 @@ function App() {
   const [categoryTotals, setCategoryTotals] = useState({});
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     if (!message) return;
@@ -96,6 +97,7 @@ function App() {
 
   function handleDelete(id) {
     const confirmed = window.confirm('Delete this expense?');
+    setDeletingId(id);
 
     if (!confirmed) return;
 
@@ -109,6 +111,7 @@ function App() {
       setMessage('')
       setError(error.message)
     })
+    .finally(() => setDeletingId(null));
   }
 
   function loadSummary(category = '', startDate = '', endDate = '') {
@@ -204,6 +207,7 @@ function App() {
           saving={saving}
           handleDelete={handleDelete}
           startEdit={startEdit}
+          deletingId={deletingId}
         />
       )}
      </main>

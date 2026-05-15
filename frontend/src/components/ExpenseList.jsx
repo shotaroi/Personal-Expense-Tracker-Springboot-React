@@ -4,6 +4,7 @@ function ExpenseList({
     saving,
     handleDelete,
     startEdit,
+    deletingId,
 }) {
     if (expenses.length === 0) return <p>No expenses yet.</p>
 
@@ -16,8 +17,12 @@ function ExpenseList({
                     </span>
 
                     <span className="expense-actions">
-                        <button type="button" disabled={saving} onClick={() => handleDelete(expense.id)}>
-                            Delete
+                        <button 
+                          type="button" 
+                          disabled={saving}
+                          onClick={() => handleDelete(expense.id)}
+                        >
+                            {deletingId === expense.id ? 'Deleting...' : 'Delete'}
                         </button>
                         <button type="button" disabled={saving} onClick={() => startEdit(expense)}>
                             Edit
