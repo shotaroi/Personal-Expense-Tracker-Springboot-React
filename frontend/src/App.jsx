@@ -81,6 +81,7 @@ function App() {
 
     request
     .then(() => {
+      setError('');
       setMessage(isEditing ? 'Expense updated successfully' : 'Expense added successfully');
       setForm(EMPTY_FORM)
       setEditingId(null);
@@ -100,6 +101,7 @@ function App() {
 
     deleteExpense(id)
     .then(() => {
+      setError('');
       setMessage('Expense deleted successfully');
       refreshData();
     })
