@@ -15,6 +15,13 @@ import {
 import { validateExpense } from './utils/validateExpense';
 import { currencyFormatter } from './utils/currencyFormatter';
 
+const EMPTY_FORM = {
+  title: '',
+  amount: '',
+  category: '',
+  date: '',
+};
+
 function App() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,12 +34,6 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [categoryTotals, setCategoryTotals] = useState({});
   const [saving, setSaving] = useState(false);
-  const EMPTY_FORM = {
-    title: '',
-    amount: '',
-    category: '',
-    date: '',
-  };
 
   useEffect(() => {
     refreshData('', '', '');
