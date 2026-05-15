@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
-import './App.css'
-import Summary from './components/Summary';
-import ExpenseFilters from './components/ExpenseFilters';
-import ExpenseForm from './components/ExpenseForm';
-import ExpenseList from './components/ExpenseList';
+
 import { 
   fetchExpenses, 
   fetchSummary,
@@ -12,9 +8,16 @@ import {
   updateExpense, 
   deleteExpense, 
 } from './services/expenseApi';
+import { EMPTY_FORM } from './constants/expenseForm';
 import { validateExpense } from './utils/validateExpense';
 import { currencyFormatter } from './utils/currencyFormatter';
-import { EMPTY_FORM } from './constants/expenseForm';
+
+import Summary from './components/Summary';
+import ExpenseFilters from './components/ExpenseFilters';
+import ExpenseForm from './components/ExpenseForm';
+import ExpenseList from './components/ExpenseList';
+
+import './App.css'
 
 function App() {
   const [expenses, setExpenses] = useState([]);
