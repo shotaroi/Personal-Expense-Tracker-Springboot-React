@@ -101,7 +101,7 @@ function App() {
     if (!confirmed) return;
     
     setDeletingId(id);
-    
+
     deleteExpense(id)
     .then(() => {
       setError('');
@@ -125,7 +125,10 @@ function App() {
     setLoading(true);
 
     fetchExpenses({ category, startDate, endDate })
-    .then(data => setExpenses(data))
+    .then(data => {
+      const sortedExpenses = [...data].sort((a, b) => b.data.localeCompare(a.date));
+      setExpenses(sortedExpenses);
+    })
     .catch(error => setError(error.message))
     .finally(() => setLoading(false))
   }
