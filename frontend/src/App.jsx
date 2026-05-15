@@ -88,9 +88,13 @@ function App() {
 
     deleteExpense(id)
     .then(() => {
+      setMessage('Expense deleted successfully');
      refreshData();
     })
-    .catch(error => setError(error.message))
+    .catch(error => {
+      setMessage('')
+      setError(error.message)
+    })
   }
 
   function loadSummary(category = '', startDate = '', endDate = '') {
