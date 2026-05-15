@@ -34,7 +34,17 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    refreshData('', '', '');
+    if (!message) return;
+    
+    const timeoutId = setTimeout(() => {
+      setMessage('');
+    }, 3000)
+
+    return () => clearTimeout(timeoutId);
+  }, [message]);
+
+  useEffect(() => {
+    refreshDate('', '', '');
   }, []);
 
   function handleChange(event) {
@@ -89,7 +99,7 @@ function App() {
     deleteExpense(id)
     .then(() => {
       setMessage('Expense deleted successfully');
-     refreshData();
+      refreshData();
     })
     .catch(error => {
       setMessage('')
