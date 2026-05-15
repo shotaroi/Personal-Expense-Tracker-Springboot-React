@@ -31,6 +31,7 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [categoryTotals, setCategoryTotals] = useState({});
   const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     refreshData('', '', '');
@@ -68,11 +69,15 @@ function App() {
 
     request
     .then(() => {
+      setMessage(isEditing ? 'Expense updated successfully' : 'Expense added successfully');
       setForm(EMPTY_FORM)
       setEditingId(null);
       refreshData();
     })
-    .catch(error => setError(error.message))
+    .catch(error => {
+      setMessage('');
+      setError(error.message)
+    })
     .finally(() => setSaving(false));
   }
 
@@ -154,6 +159,7 @@ function App() {
 
       {loading && <p>Loading expenses...</p>}
       {error && <p className='error'>{error}</p>}
+      {message && <p className='success'>{message}</p>}
 
       <ExpenseFilters 
         categoryFilter={categoryFilter}
