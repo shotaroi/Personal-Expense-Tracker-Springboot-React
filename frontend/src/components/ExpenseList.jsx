@@ -19,12 +19,16 @@ function ExpenseList({
                     <span className="expense-actions">
                         <button 
                           type="button" 
-                          disabled={saving}
+                          disabled={saving || deletingId === expense.id}
                           onClick={() => handleDelete(expense.id)}
                         >
                             {deletingId === expense.id ? 'Deleting...' : 'Delete'}
                         </button>
-                        <button type="button" disabled={saving} onClick={() => startEdit(expense)}>
+                        <button 
+                          type="button"
+                          disabled={saving || deletingId === expense.id}
+                          onClick={() => startEdit(expense)}
+                        >
                             Edit
                         </button>
                     </span>

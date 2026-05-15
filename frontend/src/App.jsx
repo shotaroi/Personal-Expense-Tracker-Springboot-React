@@ -97,10 +97,11 @@ function App() {
 
   function handleDelete(id) {
     const confirmed = window.confirm('Delete this expense?');
-    setDeletingId(id);
-
+    
     if (!confirmed) return;
-
+    
+    setDeletingId(id);
+    
     deleteExpense(id)
     .then(() => {
       setError('');
