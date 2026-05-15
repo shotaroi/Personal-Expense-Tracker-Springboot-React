@@ -16,6 +16,7 @@ import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
+import Notifications from './components/Notifications';
 
 import './App.css'
 
@@ -44,7 +45,7 @@ function App() {
   }, [message]);
 
   useEffect(() => {
-    refreshDate('', '', '');
+    refreshData('', '', '');
   }, []);
 
   function handleChange(event) {
@@ -172,9 +173,7 @@ function App() {
       />
 
       {loading && <p>Loading expenses...</p>}
-      {error && <p className='error'>{error}</p>}
-      {message && <p className='success'>{message}</p>}
-
+      <Notification error={error} message={message} />
       <ExpenseFilters 
         categoryFilter={categoryFilter}
         setCategoryFilter={setCategoryFilter}
