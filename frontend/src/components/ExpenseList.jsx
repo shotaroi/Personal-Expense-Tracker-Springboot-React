@@ -5,8 +5,9 @@ function ExpenseList({
     handleDelete,
     startEdit,
     deletingId,
+    emptyMessage,
 }) {
-    if (expenses.length === 0) return <p>No expenses yet.</p>
+    if (expenses.length === 0) return <p>{emptyMessage}</p>
 
     return (
         <ul className="expense-list">

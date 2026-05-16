@@ -46,6 +46,9 @@ function App() {
     startDateFilter && `From: ${startDateFilter}`,
     endDateFilter && `To: ${endDateFilter}`,
   ].filter(Boolean).join(' | ');
+  const emptyExpensesMessage = hasActiveFilters
+    ? 'No expenses match the current filters.'
+    : 'No expenses yet.';
 
   useEffect(() => {
     if (!message) return;
@@ -254,6 +257,7 @@ function App() {
             handleDelete={handleDelete}
             startEdit={startEdit}
             deletingId={deletingId}
+            emptyMessage={emptyExpensesMessage}
           />
         </section>
       )}
