@@ -19,3 +19,23 @@ Start the Vite dev server:
 ```bash
 npm run dev
 ```
+
+## Useful Scripts
+
+Run lint checks:
+
+```bash
+npm run lint
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
