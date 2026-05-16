@@ -11,7 +11,7 @@ import {
 import { EMPTY_FORM } from './constants/expenseForm';
 import { validateExpense } from './utils/validateExpense';
 import { currencyFormatter } from './utils/currencyFormatter';
-import { sortExpenseByNewest } from './utils/sortExpenseByNewest';
+import { sortExpensesByNewest } from './utils/sortExpensesByNewest';
 
 import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
