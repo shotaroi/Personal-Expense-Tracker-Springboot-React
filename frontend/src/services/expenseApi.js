@@ -23,21 +23,21 @@ function buildQuery({ category = '', startDate = '', endDate = '' } = {}) {
 }
 
 export function fetchExpenses(filters = {}) {
-    return fetch(`${API_URL}${buildQuery(filters)}`).then(response => {
-        handleJsonResponse(response, 'Failed to load expenses');
-    })
+    return fetch(`${API_URL}${buildQuery(filters)}`).then(response => 
+        handleJsonResponse(response, 'Failed to load expenses')
+    )
 }
 
 export function fetchSummary(filters = {}) {
-    return fetch(`${API_URL}/summary${buildQuery(filters)}`).then(response => {
-        handleJsonResponse(response, 'Failed to load expenses');
-    })
+    return fetch(`${API_URL}/summary${buildQuery(filters)}`).then(response => 
+        handleJsonResponse(response, 'Failed to load expenses')
+    )
 }
 
 export function fetchCategoryTotals({ startDate = '', endDate = '' } = {}) {
-    return fetch(`${API_URL}/summary/by-category${buildQuery({ startDate, endDate })}`).then(response => {
-        handleJsonResponse(response, 'Failed to load expenses');
-    })
+    return fetch(`${API_URL}/summary/by-category${buildQuery({ startDate, endDate })}`).then(response => 
+        handleJsonResponse(response, 'Failed to load category totals')
+    )
 }
 
 export function createExpense(expense) {
@@ -47,9 +47,9 @@ export function createExpense(expense) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(expense),
-    }).then(response => {
-        handleJsonResponse(response, 'Failed to load expenses');
-    })
+    }).then(response => 
+        handleJsonResponse(response, 'Failed to create expenses')
+    )
 }
 
 export function updateExpense(id, expense) {
@@ -59,16 +59,16 @@ export function updateExpense(id, expense) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(expense),
-    }).then(response => {
-        handleJsonResponse(response, 'Failed to load expenses');
-    })
+    }).then(response => 
+        handleJsonResponse(response, 'Failed to update expenses')
+    )
 }
 
 export function deleteExpense(id) {
     return fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
-    }).then(response => {
-        handleEmptyResponse(response, 'Failed to delete expense');
-    })
+    }).then(response => 
+        handleEmptyResponse(response, 'Failed to delete expense')
+    )
 }
 
