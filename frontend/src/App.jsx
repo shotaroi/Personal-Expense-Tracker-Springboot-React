@@ -51,6 +51,10 @@ function App() {
     refreshData('', '', '');
   }, []);
 
+  useEffect(() => {
+    setExpenses((prev) => sortExpensesByDate(prev, sortDirection));
+  }, [sortDirection]);
+
   function handleChange(event) {
     const { name, value } = event.target
     setForm({ ...form, [name]: value })
