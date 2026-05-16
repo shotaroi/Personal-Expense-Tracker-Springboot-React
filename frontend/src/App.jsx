@@ -41,6 +41,11 @@ function App() {
   const sortDirectionLabel = sortDirection === 'desc' ? 'Newest first' : 'Oldest first';
   const nextSortDirectionLabel = sortDirection === 'desc' ? 'Oldest first' : 'Newest first';
   const hasActiveFilters = Boolean(categoryFilter || startDateFilter || endDateFilter);
+  const activeFilterLabel = [
+    categoryFilter && `Category: ${categoryFilter}`,
+    startDateFilter && `From: ${startDateFilter}`,
+    endDateFilter && `To: ${endDateFilter}`,
+  ].filter(Boolean).join(' | ');
 
   useEffect(() => {
     if (!message) return;
@@ -227,7 +232,7 @@ function App() {
           </p>
           {hasActiveFilters && (
             <p>
-              Filters applied
+              Filters applied: {activeFilterLabel}
             </p>
           )}
           <button 
