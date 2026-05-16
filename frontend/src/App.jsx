@@ -38,8 +38,9 @@ function App() {
   const [sortDirection, setSortDirection] = useState('desc');
 
   const expenseCountLabel = `${expenses.length} ${expenses.length === 1 ? 'expense' : 'expenses'}`;
-  const sortDirectionLabel = sortDirection === 'desc' ? 'Newest first' : 'Oldest first'
-  const nextSortDirectionLabel = sortDirection === 'desc' ? 'Oldest first' : 'Newest first'
+  const sortDirectionLabel = sortDirection === 'desc' ? 'Newest first' : 'Oldest first';
+  const nextSortDirectionLabel = sortDirection === 'desc' ? 'Oldest first' : 'Newest first';
+  const hasActiveFilters = Boolean(categoryFilter || startDateFilter || endDateFilter);
 
   useEffect(() => {
     if (!message) return;
@@ -220,11 +221,15 @@ function App() {
       />
 
       {!loading && !error && (
-
         <>
           <p>
             Showing {expenseCountLabel}
           </p>
+          {hasActiveFilters && (
+            <p>
+              Filters applied
+            </p>
+          )}
           <button 
             type='button'
             aria-label={`Sort expenses by date: ${nextSortDirectionLabel}`}
