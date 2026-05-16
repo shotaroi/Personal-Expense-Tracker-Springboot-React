@@ -7,7 +7,7 @@ function ExpenseList({
     deletingId,
     emptyMessage,
 }) {
-    if (expenses.length === 0) return <p>{emptyMessage}</p>
+    if (expenses.length === 0) return <p className='empty-state'>{emptyMessage}</p>
 
     return (
         <ul className="expense-list">
