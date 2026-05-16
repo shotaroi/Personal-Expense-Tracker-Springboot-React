@@ -11,6 +11,7 @@ import {
 import { EMPTY_FORM } from './constants/expenseForm';
 import { validateExpense } from './utils/validateExpense';
 import { currencyFormatter } from './utils/currencyFormatter';
+import { sortExpenseByNewest } from './utils/sortExpenseByNewest';
 
 import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
@@ -127,14 +128,9 @@ function App() {
     fetchExpenses({ category, startDate, endDate })
     .then(data => {
       setExpenses(sortExpensesByNewest(data));
-      setExpenses(sortedExpenses);
     })
     .catch(error => setError(error.message))
     .finally(() => setLoading(false))
-  }
-
-  function sortExpensesByNewest(expenses) {
-    return [...expenses].sort((a, b) => b.date.localeCompare(a.date));
   }
 
   function handleFilterSubmit(event) {
