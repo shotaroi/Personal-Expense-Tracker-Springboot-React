@@ -11,7 +11,7 @@ import {
 import { EMPTY_FORM } from './constants/expenseForm';
 import { validateExpense } from './utils/validateExpense';
 import { currencyFormatter } from './utils/currencyFormatter';
-import { sortExpensesByNewest } from './utils/sortExpensesByNewest';
+import { sortExpensesByDate } from './utils/sortExpensesByDate';
 
 import Summary from './components/Summary';
 import ExpenseFilters from './components/ExpenseFilters';
@@ -35,6 +35,7 @@ function App() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [deletingId, setDeletingId] = useState(null);
+  const [sortDirection, setSortDirection] = useState('desc');
 
   useEffect(() => {
     if (!message) return;
@@ -127,7 +128,7 @@ function App() {
 
     fetchExpenses({ category, startDate, endDate })
     .then(data => {
-      setExpenses(sortExpensesByNewest(data));
+      setExpenses(sortExpensesByDate(data, sortDirection));
     })
     .catch(error => setError(error.message))
     .finally(() => setLoading(false))
@@ -205,7 +206,15 @@ function App() {
       />
 
       {!loading && !error && (
-        <ExpenseList 
+
+        <>
+          <button 
+            type='button'
+            onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
+          >
+            Sort: {sortDirection === 'desc' ? 'Newest first' : 'Oldest first'}
+          </button>
+          <ExpenseList 
           expenses={expenses}
           currencyFormatter={currencyFormatter}
           saving={saving}
@@ -213,6 +222,8 @@ function App() {
           startEdit={startEdit}
           deletingId={deletingId}
         />
+        </>
+        
       )}
      </main>
     </>
