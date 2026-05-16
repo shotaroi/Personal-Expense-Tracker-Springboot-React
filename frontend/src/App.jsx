@@ -38,7 +38,7 @@ function App() {
   const [sortDirection, setSortDirection] = useState('desc');
 
   const expenseCountLabel = `${expenses.length} ${expenses.length === 1 ? 'expense' : 'expenses'}`;
-
+  const sortDirectionLabel = sortDirection === 'desc' ? 'Newest first' : 'oldest first'
   useEffect(() => {
     if (!message) return;
     
@@ -229,7 +229,7 @@ function App() {
             aria-pressed={sortDirection === 'asc'}
             onClick={toggleSortDirection}
           >
-            Sort: {sortDirection === 'desc' ? 'Newest first' : 'Oldest first'}
+            Sort: {sortDirectionLabel}
           </button>
           <ExpenseList 
             expenses={expenses}
