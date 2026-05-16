@@ -30,7 +30,7 @@ export function fetchExpenses(filters = {}) {
 
 export function fetchSummary(filters = {}) {
     return fetch(`${API_URL}/summary${buildQuery(filters)}`).then(response => 
-        handleJsonResponse(response, 'Failed to load expenses')
+        handleJsonResponse(response, 'Failed to load summary')
     )
 }
 
@@ -48,7 +48,7 @@ export function createExpense(expense) {
         },
         body: JSON.stringify(expense),
     }).then(response => 
-        handleJsonResponse(response, 'Failed to create expenses')
+        handleJsonResponse(response, 'Failed to create expense')
     )
 }
 
@@ -60,7 +60,7 @@ export function updateExpense(id, expense) {
         },
         body: JSON.stringify(expense),
     }).then(response => 
-        handleJsonResponse(response, 'Failed to update expenses')
+        handleJsonResponse(response, 'Failed to update expense')
     )
 }
 
