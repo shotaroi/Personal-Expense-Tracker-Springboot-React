@@ -228,7 +228,7 @@ function App() {
       {!loading && !error && (
         <section aria-labelledby='expenses-heading'>
           <h2 id='expenses-heading'>Expenses</h2>
-          <div className="expense-toolbar">
+          <div className='expense-toolbar'>
             <p className='expense-count'>
               Showing {expenseCountLabel}
             </p>
@@ -246,7 +246,7 @@ function App() {
             >
               Sort: {sortDirectionLabel}
             </button>
-          </div>      
+          </div>
           <ExpenseList 
             expenses={expenses}
             currencyFormatter={currencyFormatter}
