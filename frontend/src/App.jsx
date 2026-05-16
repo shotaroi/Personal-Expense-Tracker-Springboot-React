@@ -231,7 +231,7 @@ function App() {
             Showing {expenseCountLabel}
           </p>
           {hasActiveFilters && (
-            <p>
+            <p role='status'>
               Filters applied: {activeFilterLabel}
             </p>
           )}
@@ -252,7 +252,6 @@ function App() {
             deletingId={deletingId}
           />
         </>
-        
       )}
      </main>
     </>
