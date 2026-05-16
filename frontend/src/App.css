@@ -80,6 +80,19 @@ button {
   margin-bottom: 12px;
 }
 
+.filter-status {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.expense-count {
+  font-weight: 600;
+}
+
+.expense-toolbar {
+  margin-bottom: 16px;
+}
+
 @media (max-width: 700px) {
   .app {
     padding: 16px;

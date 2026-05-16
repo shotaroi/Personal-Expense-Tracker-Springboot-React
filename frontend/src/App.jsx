@@ -228,23 +228,25 @@ function App() {
       {!loading && !error && (
         <section aria-labelledby='expenses-heading'>
           <h2 id='expenses-heading'>Expenses</h2>
-          <p>
-            Showing {expenseCountLabel}
-          </p>
-          {hasActiveFilters && (
-            <p role='status'>
-              Filters applied: {activeFilterLabel}
+          <div className="expense-toolbar">
+            <p className='expense-count'>
+              Showing {expenseCountLabel}
             </p>
-          )}
-          <button 
-            className='sort-button'
-            type='button'
-            aria-label={`Sort expenses by date: ${nextSortDirectionLabel}`}
-            aria-pressed={sortDirection === 'asc'}
-            onClick={toggleSortDirection}
-          >
-            Sort: {sortDirectionLabel}
-          </button>
+            {hasActiveFilters && (
+              <p className='filter-status' role='status'>
+                Filters applied: {activeFilterLabel}
+              </p>
+            )}
+            <button 
+              className='sort-button'
+              type='button'
+              aria-label={`Sort expenses by date: ${nextSortDirectionLabel}`}
+              aria-pressed={sortDirection === 'asc'}
+              onClick={toggleSortDirection}
+            >
+              Sort: {sortDirectionLabel}
+            </button>
+          </div>      
           <ExpenseList 
             expenses={expenses}
             currencyFormatter={currencyFormatter}
