@@ -226,7 +226,8 @@ function App() {
       />
 
       {!loading && !error && (
-        <>
+        <section aria-labelledby='expenses-heading'>
+          <h2 id='expenses-heading'>Expenses</h2>
           <p>
             Showing {expenseCountLabel}
           </p>
@@ -236,6 +237,7 @@ function App() {
             </p>
           )}
           <button 
+            className='sort-button'
             type='button'
             aria-label={`Sort expenses by date: ${nextSortDirectionLabel}`}
             aria-pressed={sortDirection === 'asc'}
@@ -251,7 +253,7 @@ function App() {
             startEdit={startEdit}
             deletingId={deletingId}
           />
-        </>
+        </section>
       )}
      </main>
     </>

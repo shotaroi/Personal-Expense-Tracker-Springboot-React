@@ -75,6 +75,11 @@ button {
   border-radius: 4px;
 }
 
+.sort-button {
+  margin-left: 0;
+  margin-bottom: 12px;
+}
+
 @media (max-width: 700px) {
   .app {
     padding: 16px;
