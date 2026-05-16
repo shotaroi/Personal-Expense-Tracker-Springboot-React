@@ -179,7 +179,8 @@ function App() {
 
   function toggleSortDirection() {
     setSortDirection((currentDirection) => 
-    currentDirection === 'desc' ? 'asc' : 'desc');
+      currentDirection === 'desc' ? 'asc' : 'desc'
+    );
   }
   
   return (
@@ -217,6 +218,9 @@ function App() {
       {!loading && !error && (
 
         <>
+          <p>
+            Showing {expenses.length} {expenses.length === 1 ? 'expense' : 'expenses'}
+          </p>
           <button 
             type='button'
             aria-label="Toggle expense sort direction"
@@ -226,13 +230,13 @@ function App() {
             Sort: {sortDirection === 'desc' ? 'Newest first' : 'Oldest first'}
           </button>
           <ExpenseList 
-          expenses={expenses}
-          currencyFormatter={currencyFormatter}
-          saving={saving}
-          handleDelete={handleDelete}
-          startEdit={startEdit}
-          deletingId={deletingId}
-        />
+            expenses={expenses}
+            currencyFormatter={currencyFormatter}
+            saving={saving}
+            handleDelete={handleDelete}
+            startEdit={startEdit}
+            deletingId={deletingId}
+          />
         </>
         
       )}
