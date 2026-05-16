@@ -214,6 +214,8 @@ function App() {
         <>
           <button 
             type='button'
+            aria-label="Toggle expense sort direction"
+            aria-pressed={sortDirection === 'asc'}
             onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
           >
             Sort: {sortDirection === 'desc' ? 'Newest first' : 'Oldest first'}
