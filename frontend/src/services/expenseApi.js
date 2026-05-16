@@ -1,5 +1,10 @@
 const API_URL = 'http://localhost:8080/api/expenses';
 
+function handleJsonResponse(response, errorMessage) {
+    if (!response.ok) throw new Error(errorMessage);
+    return response.json();
+}
+
 function buildQuery({ category = '', startDate = '', endDate = '' } = {}) {
     const params = new URLSearchParams();
 
@@ -15,22 +20,19 @@ function buildQuery({ category = '', startDate = '', endDate = '' } = {}) {
 
 export function fetchExpenses(filters = {}) {
     return fetch(`${API_URL}${buildQuery(filters)}`).then(response => {
-        if (!response.ok) throw new Error('Failed to load expenses');
-        return response.json();
+        handleJsonResponse(response, 'Failed to load expenses');
     })
 }
 
 export function fetchSummary(filters = {}) {
     return fetch(`${API_URL}/summary${buildQuery(filters)}`).then(response => {
-        if (!response.ok) throw new Error('Failed to load summary');
-        return response.json();
+        handleJsonResponse(response, 'Failed to load expenses');
     })
 }
 
 export function fetchCategoryTotals({ startDate = '', endDate = '' } = {}) {
     return fetch(`${API_URL}/summary/by-category${buildQuery({ startDate, endDate })}`).then(response => {
-        if (!response.ok) throw new Error('Failed to load category totals');
-        return response.json();
+        handleJsonResponse(response, 'Failed to load expenses');
     })
 }
 
@@ -42,8 +44,7 @@ export function createExpense(expense) {
         },
         body: JSON.stringify(expense),
     }).then(response => {
-        if (!response.ok) throw new Error('Failed to create expense');
-        return response.json();
+        handleJsonResponse(response, 'Failed to load expenses');
     })
 }
 
@@ -55,8 +56,7 @@ export function updateExpense(id, expense) {
         },
         body: JSON.stringify(expense),
     }).then(response => {
-        if (!response.ok) throw new Error('Failed to update expense');
-        return response.json();
+        handleJsonResponse(response, 'Failed to load expenses');
     })
 }
 
