@@ -176,6 +176,11 @@ function App() {
     loadSummary(category, startDate, endDate);
     loadCategoryTotals(startDate, endDate);
   }
+
+  function toggleSortDirection() {
+    setSortDirection((currentDirection) => 
+    currentDirection === 'desc' ? 'asc' : 'desc');
+  }
   
   return (
     <>
@@ -216,7 +221,7 @@ function App() {
             type='button'
             aria-label="Toggle expense sort direction"
             aria-pressed={sortDirection === 'asc'}
-            onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
+            onClick={toggleSortDirection}
           >
             Sort: {sortDirection === 'desc' ? 'Newest first' : 'Oldest first'}
           </button>
