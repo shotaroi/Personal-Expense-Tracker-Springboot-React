@@ -37,6 +37,8 @@ function App() {
   const [deletingId, setDeletingId] = useState(null);
   const [sortDirection, setSortDirection] = useState('desc');
 
+  const expenseCountLabel = `${expenses.length} ${expenses.length === 1 ? 'expense' : 'expenses'}`;
+
   useEffect(() => {
     if (!message) return;
     
@@ -219,7 +221,7 @@ function App() {
 
         <>
           <p>
-            Showing {expenses.length} {expenses.length === 1 ? 'expense' : 'expenses'}
+            Showing {expenseCountLabel}
           </p>
           <button 
             type='button'
