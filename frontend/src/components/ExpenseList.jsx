@@ -10,27 +10,27 @@ function ExpenseList({
     if (expenses.length === 0) return <p className='empty-state'>{emptyMessage}</p>
 
     return (
-        <ul className="expense-list">
+        <ul className='expense-list'>
             {expenses.map(expense => (
                 <li key={expense.id}>
                     <span>
-                        {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
+                      {expense.title} - {currencyFormatter.format(expense.amount)} - {expense.category} - {expense.date}
                     </span>
 
-                    <span className="expense-actions">
+                    <span className='expense-actions'>
                         <button 
-                          type="button" 
+                          type='button' 
                           disabled={saving || deletingId === expense.id}
                           onClick={() => handleDelete(expense.id)}
                         >
-                            {deletingId === expense.id ? 'Deleting...' : 'Delete'}
+                          {deletingId === expense.id ? 'Deleting...' : 'Delete'}
                         </button>
                         <button 
-                          type="button"
+                          type='button'
                           disabled={saving || deletingId === expense.id}
                           onClick={() => startEdit(expense)}
                         >
-                            Edit
+                          Edit
                         </button>
                     </span>
                 </li>
