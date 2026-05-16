@@ -5,6 +5,10 @@ function handleJsonResponse(response, errorMessage) {
     return response.json();
 }
 
+function handleEmptyResponse(response, errorMessage) {
+    if (!response.ok) throw new Error(errorMessage);
+}
+
 function buildQuery({ category = '', startDate = '', endDate = '' } = {}) {
     const params = new URLSearchParams();
 
@@ -64,7 +68,7 @@ export function deleteExpense(id) {
     return fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
     }).then(response => {
-        if (!response.ok) throw new Error('Failed to delete expense');
+        handleEmptyResponse(response, 'Failed to delete expense');
     })
 }
 
